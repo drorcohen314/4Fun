@@ -2,7 +2,26 @@
     <head>
         <title>4fun</title>
     </head>
+    <form action="new-post" method="post">
+        <div>
+            <label>Title</label>
+            <input type="text" name="title" class="form-title" required>
+        </div>
+        <div>
+            <label>Content</label>
+            <input type="text" name="content" class="form-content">
+        </div>
+        <input type="submit" value="submit"/>
+    </form>
     <body>
-        based
+        {% for post in posts %}
+        <div class="post-header">
+            <div>{{ post.title }}</div>
+            <div>{{ post.id }}</div>
+        </div>
+        <div class="content">
+            {{ post.content }}
+        </div>
+        {% endfor %}
     </body>
 </html>
