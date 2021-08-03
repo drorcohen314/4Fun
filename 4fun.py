@@ -13,13 +13,15 @@ Example post representation in the database:
   "reports": 0,
   "id": 123245123124,
   "parent": 85718975819651, // null if the post is a thread
-  "image": null
+  "image": null,
+  date: ISODate("2021-08-03T15:14:27.817Z"),
 }
 """
 
 from flask import Flask, render_template, redirect
 from flask import request as req
 from pymongo import MongoClient
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -56,6 +58,8 @@ def new_post():
         "upvotes": 0,
         "downvotes": 0,
         "reports": 0,
-        "id": id_for_new_post()
+        "id": id_for_new_post(),
+        "image": None,
+        "date": datetime.now()
     })
     return redirect("/")
