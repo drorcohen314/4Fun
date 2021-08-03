@@ -9,20 +9,35 @@
         </div>
         <div>
             <label>Content</label>
-            <input type="text" name="content" class="form-content">
+            <textarea type="text" name="content" class="form-content"></textarea>
         </div>
         <input type="submit" value="submit"/>
     </form>
     <body>
-        {% for post in posts %}
-        <div class="post-header">
-            <div>{{ post.title }}</div>
-            <div>{{ post.id }}</div>
-            <div>{{ post.date.strftime("%d/%m/%y %H:%M") }}</div>
-        </div>
-        <div class="content">
-            {{ post.content }}
-        </div>
+        <div class="thread">
+        {% for thread_id in threads %}
+            <div class="post-header">
+                <div>{{ posts_by_id[thread_id]["title"] }}</div>
+                <div>{{ posts_by_id[thread_id]["id"] }}</div>
+                <div>{{ posts_by_id[thread_id]["date"].strftime("%d/%m/%y %H:%M") }}</div>
+            </div>
+            <div class="content">
+                {{ posts_by_id[thread_id]["content"] }}
+            </div>
+            <a href="/reply/{{ posts_by_id[thread_id]['id'] }}">Reply</a>
+            <div class="children">
+            {% for child_id in threads[thread_id] %}
+                <div class="post-header">
+                    <div>{{ posts_by_id[child_id]["title"] }}</div>
+                    <div>{{ posts_by_id[child_id]["id"] }}</div>
+                    <div>{{ posts_by_id[child_id]["date"].strftime("%d/%m/%y %H:%M") }}</div>
+                </div>
+                <div class="content">
+                    {{ posts_by_id[child_id]["content"] }}
+                </div>
+            {% endfor %}
+            </div>
         {% endfor %}
+        </div>
     </body>
 </html>
