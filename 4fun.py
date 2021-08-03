@@ -63,3 +63,26 @@ def new_post():
         "date": datetime.now()
     })
     return redirect("/")
+
+def parse_content(lines):
+    parsed_lines = []
+    for line in lines:
+        line_content = line
+        text_type = "plain"
+        reference_post_id = null
+        
+        if line[0] == '>':
+            if line[1] == '>':
+                text_type = "reference"
+                reference_post_id = line[2:line.Length]
+            else:
+                text_type = "greentext"
+        
+        # insert paresd line
+        parsed_lines.append({
+                            "line_content":line_content,
+                            "type":text_type,
+                            "reference_post_id":reference_post_id
+                            })
+
+            
