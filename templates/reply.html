@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="he">
+    <head>
+        <title>Replying to {{ title }}</title>
+    </head>
+    <body>
+        <form action="/reply/{{ post.id }}" method="post">
+            <div>
+                <label>Content</label>
+                <textarea type="text" name="content" class="form-content"></textarea>
+            </div>
+            <input type="hidden" name="parent" value="{{ post.id }}">
+            <input type="submit" value="submit"/>
+        </form>
+        <div class="post-header">
+            <div>{{ post.title }}</div>
+            <div>{{ post.id }}</div>
+            <div>{{ post.date.strftime("%d/%m/%y %H:%M") }}</div>
+        </div>
+        <div class="content">
+            {{ post.content }}
+        </div>
+    </body>
+</html>
