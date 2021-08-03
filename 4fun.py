@@ -69,12 +69,12 @@ def parse_content(lines):
     for line in lines:
         line_content = line
         text_type = "plain"
-        reference_post_id = null
+        reference_post_id = 0
         
         if line[0] == '>':
-            if line[1] == '>':
+            if line[1] == '>' and (line[2:len(line)]).isdigit():
                 text_type = "reference"
-                reference_post_id = line[2:line.Length]
+                reference_post_id = line[2:len(line)]
             else:
                 text_type = "greentext"
         
@@ -84,5 +84,6 @@ def parse_content(lines):
                             "type":text_type,
                             "reference_post_id":reference_post_id
                             })
+    return parsed_lines
 
             
