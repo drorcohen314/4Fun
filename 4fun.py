@@ -112,7 +112,7 @@ def parse_content(lines):
     for line in lines:
         line_content = line
         text_type = "plain"
-        reference_post_id = 0
+        reference_post_id = None
         
         if line[0] == '>':
             if line[1] == '>' and (line[2:len(line)]).isdigit():
@@ -127,4 +127,14 @@ def parse_content(lines):
                             "type":text_type,
                             "reference_post_id":reference_post_id
                             })
+<<<<<<< HEAD
     return parsed_lines
+=======
+    return parsed_lines
+
+def check_reference(line):
+    if line[0] == '>':
+        if (line[1:len(line)]).isdigit() or (line[1] == ' ' and (line[2:len(line)]).isdigit()):
+            return True
+    return False       
+>>>>>>> parse-text
