@@ -1,16 +1,55 @@
 <!doctype html>
-{% macro render_post(post) -%}
-<div class="post-header">
-    <div>{{ post["title"] }}</div>
-    <div>{{ post["id"] }}</div>
-    <div>{{ post["date"].strftime("%d/%m/%y %H:%M") }}</div>
-</div>
+{% macro render_post(post, is_reply=False, parent_title=None) -%}
+<!-- <div class="post-header">
+     <div>{{ post["title"] }}</div>
+     <div>{{ post["id"] }}</div>
+     <div>{{ post["date"].strftime("%d/%m/%y %H:%M") }}</div>
+     </div>
 
-{% if post["image"] %}
-<img src="/img/{{ post['image'] }}"/>
-{% endif %}
+     {% if post["image"] %}
+     <img src="/img/{{ post['image'] }}"/>
+     {% endif %}
 
-<div class="content">
-    {{ post["content"] }}
+     <div class="content">
+     {{ post["content"] }}
+     </div>
+-->
+<div class="row">
+    {% if is_reply %}
+    <div class="col-1"></div>
+    {% endif %}
+    {% if is_reply %}
+    <div class="sub-post card border-info mb-3 col-11" >
+    {% else %}
+    <div class="main-post card border-info mb-3" >
+    {% endif %}
+        <div class="card-header">
+            {% if is_reply %}
+            <strong>תגובה ל{{ parent_title }}</strong>
+            {% else %}
+            <strong>{{ post["title"] }}</strong>
+            {% endif %}
+            <!-- tags -->
+            <!-- <span class="badge badge-pill badge-dark post-tag">אמת</span> -->
+            <button class="btn btn-dark post-button float-start" data-toggle="tooltip" data-placement="top" title="דיווח" ><strong>⚠</strong></button>
+            <button class="btn btn-dark post-button float-start" data-toggle="tooltip" data-placement="top" title="אהבתי"><strong>👍</strong></button>
+            <button class="btn btn-dark post-button float-start" data-toggle="tooltip" data-placement="top" title="לא אהבתי"><strong>👎</strong></button>
+            {% if not is_reply %}
+            <button class="btn btn-dark post-button float-start" data-toggle="tooltip"
+                    data-placement="top" title="תגובה">
+                <a href="/reply/{{ post['id'] }}" style="text-decoration: none">
+                    <strong>💬</strong>
+                </a>
+            </button>
+            {% endif %}
+            <div class="float-start post-id">ID: {{ post["id"] }}</div>
+            <div class="float-start post-id" style="color: purple">
+                {{ post["date"].strftime("%H:%M %d/%m/%y") }}
+            </div>
+        </div>
+        <div class="card-body">
+            <p class="card-text">{{ post["content"] }}</p>
+        </div>
+    </div>
 </div>
 {%- endmacro %}

@@ -20,6 +20,7 @@ Example post representation in the database:
 
 from flask import Flask, render_template, redirect, send_from_directory
 from flask import request as req
+from flask.helpers import url_for
 from pymongo import MongoClient
 from datetime import datetime
 from werkzeug.utils import secure_filename
@@ -102,7 +103,6 @@ def reply(post_id):
     # actual POST submission endpoint
     else:
         return new_post(content=req.form["content"], parent=int(req.form["parent"]))
-
 
 @app.route("/img/<img_path>")
 def img(img_path):

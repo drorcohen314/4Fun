@@ -1,35 +1,45 @@
 {% from 'macros.html' import render_post %}
-
-<html>
+<Style type='text/css' >body{background-color:rgb(0,0,0);background-image:url(http://www.zingerbugimages.com/backgrounds/purple_stars.gif);background-position:top left;background-repeat:repeat;background-attachment:fixed;cursor: url(https://cur.cursors-4u.net/cursors/cur-3/cur234.ani), url(https://cur.cursors-4u.net/cursors/cur-3/cur234.png), auto !important;}
+</Style>
+<script src="{{ url_for('static', filename='cursor-spark.js') }}"></script>
+<html dir="rtl">
     <head>
-        <title>לכיף</title>
+        <title>4fun</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     </head>
-    <form action="/new-post" method="post" enctype="multipart/form-data">
-        <div>
-            <label>כותר</label>
-            <input type="text" name="title" class="form-title" required>
+    <body>
+        <div style="background-repeat:repeat-x;
+					background-image:url('{{ url_for("static", filename="images/bar.png") }}');
+			 overflow:hidden;background-color:#c8a2c8;">
+            <a href="index.html" style="float:left;
+					 padding: 4px 16px;
+					 background-color: #c8a2c8;"><img src="{{ url_for('static', filename='images/logo.png') }}" style="width:120px;height:80px;"></a>
         </div>
-        <div>
-            <label>תוכן</label>
-            <textarea type="text" name="content" class="form-content"></textarea>
-        </div>
-        <div>
-            <input type="file" name="image">
-        </div>
-        <input type="submit" value="פרסום רשומה"/>
-    </form>
-    <body dir="rtl">
-        <div class="thread">
-        {% for thread_id in threads %}
-            {{ render_post(posts_by_id[thread_id]) }}
-            <a href="/reply/{{ posts_by_id[thread_id]['id'] }}">תגובה</a>
-
-            <div class="children">
-                {% for child_id in threads[thread_id] %}
-                    {{ render_post(posts_by_id[child_id]) }}
-                {% endfor %}
+        <br>
+        <div class="container text-right">
+            <div class="card row" id="add-form">
+                <form action="/new-post" method="post" enctype="multipart/form-data">
+                    <div class="form-group p-1">
+                        <br>
+                        <input class="form-control m-2" placeholder="כותרת" name="title" required>
+                        <textarea name="content" class="text form-control m-2" placeholder="תוכן" rows="3" required></textarea>
+						<textarea name="tags" rows="2" class="text form-control m-2" placeholder="תגיות, מופרדות בפסיק"></textarea>
+                        <input type="file" name="image" class="form-control m-2 col-6 row" >
+                        <button type="submit" class="btn btn-light float-start" id="send-button">שגר   </button>
+                    </div>
+                </form>
             </div>
-        {% endfor %}
+            <br>
+            {% for thread_id in threads %}
+                {{ render_post(posts_by_id[thread_id]) }}
+                {% for child_id in threads[thread_id] %}
+                    {{ render_post(posts_by_id[child_id],
+                                    is_reply=True,
+                                    parent_title=posts_by_id[thread_id]["title"]) }}
+                {% endfor %}
+			{% endfor %}
         </div>
     </body>
 </html>
