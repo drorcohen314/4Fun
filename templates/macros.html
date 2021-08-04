@@ -29,6 +29,10 @@
             {% else %}
             <strong>{{ post["title"] }}</strong>
             {% endif %}
+
+            {% for tag in post["tags"] %}
+                <span class="badge badge-pill badge-dark post-tag">{{ tag }}</span>
+            {% endfor %}
             <!-- tags -->
             <!-- <span class="badge badge-pill badge-dark post-tag">אמת</span> -->
             <button class="btn btn-dark post-button float-start" data-toggle="tooltip" data-placement="top" title="דיווח" ><strong>⚠</strong></button>

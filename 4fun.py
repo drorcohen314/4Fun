@@ -83,6 +83,9 @@ def new_post(**overrides):
         "date": datetime.now(),
     }
 
+    if req.form.get("tags"):
+        base_post["tags"] = req.form["tags"].split(",")
+
     uploaded_img = req.files.get("image", None)
     if uploaded_img:
         filename = secure_filename(uploaded_img.filename)
