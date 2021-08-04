@@ -1,0 +1,13 @@
+.main-post {
+    background-color: rgba(220,198,224,0.8) !important;
+    max-width: 100%;
+}
+
+.sub-post {
+    background-color: rgba(209, 152, 219, 0.8) !important;
+}
+
+#add-form {
+    background-color: rgba(220,198,224,0.8) !important;
+}
+
