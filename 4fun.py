@@ -23,8 +23,23 @@ from flask import request as req
 from flask.globals import request
 from pymongo import MongoClient
 from datetime import datetime
+from werkzeug.utils import secure_filename
+from pathlib import Path
+
 
 app = Flask(__name__)
+
+
+# Attempt to create 4fun's upload folder. Exit if permission denied
+app.config['UPLOAD_FOLDER'] = '/opt/4fun/uploads/'
+upload_folder = Path(app.config['UPLOAD_FOLDER'])
+if not upload_folder.exists():
+    try:
+        upload_folder.mkdir(exist_ok=True)
+    except PermissionError:
+        print(f"Please create {upload_folder}")
+        exit(1)
+
 
 mongoclient = MongoClient()
 db = mongoclient["4fun"]
@@ -67,6 +82,13 @@ def new_post(**overrides):
         "image": None,
         "date": datetime.now(),
     }
+
+    uploaded_img = req.files.get("image", None)
+    if uploaded_img:
+        filename = secure_filename(uploaded_img.filename)
+        uploaded_img.save(upload_folder / filename)
+        base_post["image"] = str(upload_folder / filename)
+
     posts.insert_one({**base_post, **overrides})
     return redirect("/")
 

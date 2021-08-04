@@ -1,9 +1,10 @@
 {% from 'macros.html' import render_post %}
+
 <html>
     <head>
         <title>לכיף</title>
     </head>
-    <form action="new-post" method="post">
+    <form action="/new-post" method="post" enctype="multipart/form-data">
         <div>
             <label>כותר</label>
             <input type="text" name="title" class="form-title" required>
@@ -11,6 +12,9 @@
         <div>
             <label>תוכן</label>
             <textarea type="text" name="content" class="form-content"></textarea>
+        </div>
+        <div>
+            <input type="file" name="image">
         </div>
         <input type="submit" value="פרסום רשומה"/>
     </form>
