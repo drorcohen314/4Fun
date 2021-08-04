@@ -20,9 +20,11 @@ Example post representation in the database:
 
 from flask import Flask, render_template, redirect
 from flask import request as req
+import flask
 from flask.globals import request
 from pymongo import MongoClient
 from datetime import datetime
+import hashlib
 
 app = Flask(__name__)
 
@@ -30,6 +32,13 @@ mongoclient = MongoClient()
 db = mongoclient["4fun"]
 posts = db["posts"]
 counters = db["counters"]
+
+def hash_ip_addr(ip):
+    crypto = hashlib.sha256()
+    crypto.update(bytes(ip))
+    return crypto.digest
+
+user = hash_ip_addr(flask.request.remote_addr)
 
 if counters.estimated_document_count() == 0:
     counters.insert_one({"coll": "posts", "last_index": 0})
@@ -143,4 +152,4 @@ def check_reference(line):
     if line[0] == '<':
         if (line[1:]).isdigit() or (line[1] == ' ' and (line[2:]).isdigit()):
             return True
-    return False       
+    return False
