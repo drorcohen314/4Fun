@@ -50,6 +50,12 @@
         <div class="card-body">
             <p class="card-text">{{ post["content"] }}</p>
         </div>
+
+        {% if post["image"] %}
+        <a href="/img/{{ post['image'] }}">
+            <img src="/img/{{ post['image'] }}" class="post-image"/>
+        </a>
+        {% endif %}
     </div>
 </div>
 {%- endmacro %}

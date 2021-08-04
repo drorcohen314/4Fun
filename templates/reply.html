@@ -2,7 +2,7 @@
 {% from 'macros.html' import render_post %}
 <html lang="he">
     <head>
-        <title>תגובה ל {{ title }}</title>
+        <title>תגובה ל{{ title }}</title>
         {% include 'head.html' %}
     </head>
     <body dir="rtl">
@@ -18,17 +18,18 @@
             <div class="card row" id="add-form">
                 <form action="/reply/{{ post['id'] }}" method="post" enctype="multipart/form-data">
                     <div class="form-group p-1">
-                        <br>
+                        <h1>תגובה ל: {{ title }}</h1>
                         <textarea class="text form-control m-2" placeholder="תוכן" rows="3"
-                            required name="content"></textarea>
+                                  required name="content"></textarea>
                         <input type="file" name="image" class="form-control m-2 col-6 row" >
                         <input type="hidden" name="parent" value="{{ post['id'] }}">
                         <button type="submit" class="btn btn-light float-start" id="send-button">שגר   </button>
                     </div>
                 </form>
+                <br>
             </div>
             <br>
-        {{ render_post(post) }}
+            {{ render_post(post) }}
         </div>
     </body>
 </html>

@@ -1,38 +1,53 @@
 .main-post {
-    background-color: rgba(220,198,224,0.8) !important;
-    max-width: 100%;
+  background-color: rgba(220, 198, 224, 0.8) !important;
+  max-width: 100%;
 }
 
 .sub-post {
-    background-color: rgba(209, 152, 219, 0.8) !important;
+  background-color: rgba(209, 152, 219, 0.8) !important;
 }
 
 #add-form {
-    background-color: rgba(220,198,224,0.8) !important;
+  background-color: rgba(220, 198, 224, 0.8) !important;
 }
 
 .post-tag {
-    background-color: rgba(255,255,255,0.3) !important;
-    margin: 7px !important
+  background-color: rgba(255, 255, 255, 0.3) !important;
+  margin: 7px !important;
 }
- #send-button {
-     padding-right: 40px;
-     padding-left: 40px;
-     margin:0px !important
- }
+#send-button {
+  padding-right: 40px;
+  padding-left: 40px;
+  margin: 0px !important;
+}
 
- .post-button {
-     background-color: rgba(255,255,255,0) !important;
-     border-color:rgba(255,255,255,0) !important;
-     font-size: x-large !important;
- }
+.post-button {
+  background-color: rgba(255, 255, 255, 0) !important;
+  border-color: rgba(255, 255, 255, 0) !important;
+  font-size: x-large !important;
+}
 
 .card-header {
-    font-size: x-large;
+  font-size: x-large;
 }
 
 .post-id {
-    margin-left: 10px;
-    margin-top: 12px;
-    font-size: 18px;
+  margin-left: 10px;
+  margin-top: 12px;
+  font-size: 18px;
+}
+
+.post-image {
+  max-height: 900px;
+  max-width: 900px;
+  height: auto;
+  width: auto;
+}
+
+.sivuvim {
+    transition: transform 20s ease-in-out !important;
+}
+
+.sivuvim:hover {
+    transform: rotate(72000deg) !important;
 }
