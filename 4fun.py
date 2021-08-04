@@ -108,6 +108,12 @@ def parents_and_children(all_posts):
   
   
 def parse_content(lines):
+    """
+    >>> parse_content(["> greentext", ">>1", "plaintext"])
+    [{'line_content': '> greentext', 'type': 'greentext', 'reference_post_id': 0},
+     {'line_content': '>>1', 'type': 'reference', 'reference_post_id': '1'},
+     {'line_content': 'plaintext', 'type': 'plain', 'reference_post_id': 0}]
+    """
     parsed_lines = []
     for line in lines:
         line_content = line
@@ -115,9 +121,9 @@ def parse_content(lines):
         reference_post_id = None
         
         if line[0] == '>':
-            if line[1] == '>' and (line[2:len(line)]).isdigit():
+            if check_reference(line[1:]):
                 text_type = "reference"
-                reference_post_id = line[2:len(line)]
+                reference_post_id = line[2:]
             else:
                 text_type = "greentext"
         
@@ -127,14 +133,11 @@ def parse_content(lines):
                             "type":text_type,
                             "reference_post_id":reference_post_id
                             })
-<<<<<<< HEAD
     return parsed_lines
-=======
-    return parsed_lines
+
 
 def check_reference(line):
     if line[0] == '>':
-        if (line[1:len(line)]).isdigit() or (line[1] == ' ' and (line[2:len(line)]).isdigit()):
+        if (line[1:]).isdigit() or (line[1] == ' ' and (line[2:]).isdigit()):
             return True
     return False       
->>>>>>> parse-text
