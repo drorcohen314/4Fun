@@ -1,4 +1,5 @@
 <!doctype html>
+{% from 'macros.html' import render_post %}
 <html lang="he">
     <head>
         <title>Replying to {{ title }}</title>
@@ -12,13 +13,6 @@
             <input type="hidden" name="parent" value="{{ post.id }}">
             <input type="submit" value="submit"/>
         </form>
-        <div class="post-header">
-            <div>{{ post.title }}</div>
-            <div>{{ post.id }}</div>
-            <div>{{ post.date.strftime("%d/%m/%y %H:%M") }}</div>
-        </div>
-        <div class="content">
-            {{ post.content }}
-        </div>
+        {{ render_post(post) }}
     </body>
 </html>
