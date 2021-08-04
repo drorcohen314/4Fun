@@ -1,3 +1,4 @@
+{% from 'macros.html' import render_post %}
 <html>
     <head>
         <title>4fun</title>
@@ -16,26 +17,13 @@
     <body>
         <div class="thread">
         {% for thread_id in threads %}
-            <div class="post-header">
-                <div>{{ posts_by_id[thread_id]["title"] }}</div>
-                <div>{{ posts_by_id[thread_id]["id"] }}</div>
-                <div>{{ posts_by_id[thread_id]["date"].strftime("%d/%m/%y %H:%M") }}</div>
-            </div>
-            <div class="content">
-                {{ posts_by_id[thread_id]["content"] }}
-            </div>
+            {{ render_post(posts_by_id[thread_id]) }}
             <a href="/reply/{{ posts_by_id[thread_id]['id'] }}">Reply</a>
+
             <div class="children">
-            {% for child_id in threads[thread_id] %}
-                <div class="post-header">
-                    <div>{{ posts_by_id[child_id]["title"] }}</div>
-                    <div>{{ posts_by_id[child_id]["id"] }}</div>
-                    <div>{{ posts_by_id[child_id]["date"].strftime("%d/%m/%y %H:%M") }}</div>
-                </div>
-                <div class="content">
-                    {{ posts_by_id[child_id]["content"] }}
-                </div>
-            {% endfor %}
+                {% for child_id in threads[thread_id] %}
+                    {{ render_post(posts_by_id[child_id]) }}
+                {% endfor %}
             </div>
         {% endfor %}
         </div>
