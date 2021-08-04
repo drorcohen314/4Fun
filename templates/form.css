@@ -11,3 +11,22 @@
     background-color: rgba(220,198,224,0.8) !important;
 }
 
+.post-tag {
+    background-color: rgba(255,255,255,0.3) !important;
+    margin: 7px !important
+}
+ #send-button {
+     padding-right: 40px;
+     padding-left: 40px;
+     margin:0px !important
+ }
+
+ .post-button {
+     background-color: rgba(255,255,255,0) !important;
+     border-color:rgba(255,255,255,0) !important;
+     font-size: x-large !important;
+ }
+
+.card-header {
+    font-size: x-large;
+}
