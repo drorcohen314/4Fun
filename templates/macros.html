@@ -1,0 +1,11 @@
+<!doctype html>
+{% macro render_post(post) -%}
+<div class="post-header">
+    <div>{{ post["title"] }}</div>
+    <div>{{ post["id"] }}</div>
+    <div>{{ post["date"].strftime("%d/%m/%y %H:%M") }}</div>
+</div>
+<div class="content">
+    {{ post["content"] }}
+</div>
+{%- endmacro %}
