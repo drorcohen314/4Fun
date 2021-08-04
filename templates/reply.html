@@ -2,16 +2,16 @@
 {% from 'macros.html' import render_post %}
 <html lang="he">
     <head>
-        <title>Replying to {{ title }}</title>
+        <title>תגובה ל {{ title }}</title>
     </head>
-    <body>
+    <body dir="rtl">
         <form action="/reply/{{ post.id }}" method="post">
             <div>
-                <label>Content</label>
+                <label>תוכן התגובה</label>
                 <textarea type="text" name="content" class="form-content"></textarea>
             </div>
             <input type="hidden" name="parent" value="{{ post.id }}">
-            <input type="submit" value="submit"/>
+            <input type="submit" value="שליחת תגובה"/>
         </form>
         {{ render_post(post) }}
     </body>

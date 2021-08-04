@@ -1,24 +1,24 @@
 {% from 'macros.html' import render_post %}
 <html>
     <head>
-        <title>4fun</title>
+        <title>לכיף</title>
     </head>
     <form action="new-post" method="post">
         <div>
-            <label>Title</label>
+            <label>כותר</label>
             <input type="text" name="title" class="form-title" required>
         </div>
         <div>
-            <label>Content</label>
+            <label>תוכן</label>
             <textarea type="text" name="content" class="form-content"></textarea>
         </div>
-        <input type="submit" value="submit"/>
+        <input type="submit" value="פרסום רשומה"/>
     </form>
-    <body>
+    <body dir="rtl">
         <div class="thread">
         {% for thread_id in threads %}
             {{ render_post(posts_by_id[thread_id]) }}
-            <a href="/reply/{{ posts_by_id[thread_id]['id'] }}">Reply</a>
+            <a href="/reply/{{ posts_by_id[thread_id]['id'] }}">תגובה</a>
 
             <div class="children">
                 {% for child_id in threads[thread_id] %}
