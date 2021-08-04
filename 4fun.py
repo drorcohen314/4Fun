@@ -123,7 +123,10 @@ def parse_content(lines):
         if line[0] == '>':
             if check_reference(line[1:]):
                 text_type = "reference"
-                reference_post_id = line[2:]
+                if line[2] == ' ':
+                    reference_post_id = line[3:]
+                else:
+                    reference_post_id = line[2:]
             else:
                 text_type = "greentext"
         
