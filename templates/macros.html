@@ -5,6 +5,11 @@
     <div>{{ post["id"] }}</div>
     <div>{{ post["date"].strftime("%d/%m/%y %H:%M") }}</div>
 </div>
+
+{% if post["image"] %}
+<img src="/img/{{ post['image'] }}"/>
+{% endif %}
+
 <div class="content">
     {{ post["content"] }}
 </div>

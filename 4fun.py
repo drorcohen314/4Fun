@@ -18,9 +18,8 @@ Example post representation in the database:
 }
 """
 
-from flask import Flask, render_template, redirect
+from flask import Flask, render_template, redirect, send_from_directory
 from flask import request as req
-from flask.globals import request
 from pymongo import MongoClient
 from datetime import datetime
 from werkzeug.utils import secure_filename
@@ -31,8 +30,8 @@ app = Flask(__name__)
 
 
 # Attempt to create 4fun's upload folder. Exit if permission denied
-app.config['UPLOAD_FOLDER'] = '/opt/4fun/uploads/'
-upload_folder = Path(app.config['UPLOAD_FOLDER'])
+app.config["UPLOAD_FOLDER"] = "/opt/4fun/uploads/"
+upload_folder = Path(app.config["UPLOAD_FOLDER"])
 if not upload_folder.exists():
     try:
         upload_folder.mkdir(exist_ok=True)
@@ -87,22 +86,27 @@ def new_post(**overrides):
     if uploaded_img:
         filename = secure_filename(uploaded_img.filename)
         uploaded_img.save(upload_folder / filename)
-        base_post["image"] = str(upload_folder / filename)
+        base_post["image"] = filename
 
     posts.insert_one({**base_post, **overrides})
     return redirect("/")
 
-  
+
 @app.route("/reply/<int:post_id>", methods=["GET", "POST"])
 def reply(post_id):
     # reply input page, not submitting yet
-    if request.method == "GET":
+    if req.method == "GET":
         post = posts.find_one({"id": post_id})
         title = post["title"] or str(post["id"])
         return render_template("reply.html", post=post, title=title)
     # actual POST submission endpoint
     else:
         return new_post(content=req.form["content"], parent=int(req.form["parent"]))
+
+
+@app.route("/img/<img_path>")
+def img(img_path):
+    return send_from_directory(str(upload_folder.absolute()), img_path)
 
 
 def parents_and_children(all_posts):
@@ -127,8 +131,8 @@ def parents_and_children(all_posts):
                 result[post["parent"]] = []
             result[post["parent"]].append(post["id"])
     return result
-  
-  
+
+
 def parse_content(lines):
     """
     >>> parse_content(["> greentext", ">>1", "plaintext"])
@@ -141,25 +145,27 @@ def parse_content(lines):
         line_content = line
         text_type = "plain"
         reference_post_id = None
-        
-        if line[0] == '>':
+
+        if line[0] == ">":
             if check_reference(line[1:]):
                 text_type = "reference"
                 reference_post_id = line[2:]
             else:
                 text_type = "greentext"
-        
+
         # insert paresd line
-        parsed_lines.append({
-                            "line_content":line_content,
-                            "type":text_type,
-                            "reference_post_id":reference_post_id
-                            })
+        parsed_lines.append(
+            {
+                "line_content": line_content,
+                "type": text_type,
+                "reference_post_id": reference_post_id,
+            }
+        )
     return parsed_lines
 
 
 def check_reference(line):
-    if line[0] == '>':
-        if (line[1:]).isdigit() or (line[1] == ' ' and (line[2:]).isdigit()):
+    if line[0] == ">":
+        if (line[1:]).isdigit() or (line[1] == " " and (line[2:]).isdigit()):
             return True
-    return False       
+    return False
