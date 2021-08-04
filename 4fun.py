@@ -120,7 +120,7 @@ def parse_content(lines):
         text_type = "plain"
         reference_post_id = None
         
-        if line[0] == '>':
+        if line[0] == '<':
             if check_reference(line[1:]):
                 text_type = "reference"
                 if line[2] == ' ':
@@ -140,7 +140,7 @@ def parse_content(lines):
 
 
 def check_reference(line):
-    if line[0] == '>':
+    if line[0] == '<':
         if (line[1:]).isdigit() or (line[1] == ' ' and (line[2:]).isdigit()):
             return True
     return False       
